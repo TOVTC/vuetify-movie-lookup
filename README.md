@@ -68,3 +68,6 @@ pnpm lint
 ### Customize configuration
 
 See [Configuration Reference](https://vitejs.dev/config/).
+
+<!-- https://stackoverflow.com/questions/59255192/breakpoints-not-working-correctly-for-xs-in-vuetify -->
+<!-- why is my breakpoint not working lmao -->
