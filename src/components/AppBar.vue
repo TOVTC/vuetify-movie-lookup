@@ -7,12 +7,12 @@
 </script>
 
 <template>
-  <v-app-bar flat>
+  <v-app-bar flat class="bg-blue">
     <v-app-bar-title @click="placeholder('homepage')">
-      <v-icon>
+      <v-icon class="mx-2">
         <v-img src="../../../public/favicon.png"/>
       </v-icon>
-      Movie Lookup
+      <p class="d-inline mx-2">Movie Lookup</p>
     </v-app-bar-title>
     <!-- <v-spacer /> -->
     <v-btn text @click="placeholder('trending')">Trending</v-btn>
