@@ -1,5 +1,18 @@
 # base
 
+## Creating new project
+
+```
+# yarn
+yarn create vuetify
+
+# npm
+npm create vuetify
+
+# pnpm
+pnpm create vuetify
+```
+
 ## Project setup
 
 ```
