@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { apikey } from '../../apikey';
 
 const movies = ref([]);
 const movieObjects = [
@@ -27,21 +26,32 @@ const movieObjects = [
 ]
 
 class MovieOption {
-  constructor(id, title, releaseDate) {
-      this.id = id,
-      this.title = title,
-      this.releaseDate = releaseDate || ""
+  constructor(id, title, releaseDate, generatedTitle) {
+    this.id = id,
+    this.title = title,
+    this.releaseDate = releaseDate || "",
+    this.generatedTitle = generatedTitle
   }
+}
+
+function generateTitle(title, date) {
+  if (date.trim().length === 0) {
+    return title;
+  }
+    return `${title} (${date.split('-')[0]})`
 }
 
 onMounted(() => {
   movieObjects.forEach(movie => {
-    movies.value.push(new MovieOption(movie.id, movie.title, movie.release_date))
+    movies.value.push(new MovieOption(
+      movie.id, 
+      movie.title, 
+      movie.release_date, 
+      generateTitle(movie.title, movie.release_date)
+    ))
   });
-  console.log(apikey);
   console.log(movies.value);
 });
-
 </script>
 
 <template>
@@ -52,7 +62,7 @@ onMounted(() => {
         <v-col cols="6" class="text-center">
           <v-list
             :items="movies"
-            item-title="title"
+            item-title="generatedTitle"
             item-value="id"
           >
           </v-list>

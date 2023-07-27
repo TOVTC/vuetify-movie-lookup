@@ -68,7 +68,7 @@ class Movie {
   }
 }
 
-function _parseObjects(propName, data) {
+function parseObjects(propName, data) {
       let targetValues = [];
 
       data.forEach(item => {
@@ -83,16 +83,16 @@ onMounted(() => {
     movieObject.id,
     movieObject.title,
     movieObject.original_title,
-    movieObject.poster_path,
+    movieObject.posterpath,
     movieObject.original_language,
     movieObject.release_date,
     movieObject.runtime,
     movieObject.tagline,
     movieObject.homepage,
     movieObject.overview,
-    _parseObjects('name', movieObject.genres),
-    _parseObjects('english_name', movieObject.spoken_languages),
-    _parseObjects('name', movieObject.production_companies)
+    parseObjects('name', movieObject.genres),
+    parseObjects('english_name', movieObject.spoken_languages),
+    parseObjects('name', movieObject.production_companies)
   )
   console.log(movie.value);
 });
