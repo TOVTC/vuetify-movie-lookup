@@ -1,8 +1,6 @@
 <script setup>
-
-
     import { ref } from 'vue';
-
+    const isFormValid = ref(false);
     const searchTerm = ref('');
     const validate = [
       () => {
@@ -14,10 +12,9 @@
     ]
 
     function submit() {
-      // figure out how to link validation function to submit function
-      if (searchTerm.value.trim().length === 0) {
-          return
-        }
+      if (!isFormValid.value) {
+        return;
+      }
       console.log(searchTerm.value);
     }
 </script>
@@ -33,7 +30,7 @@
       <v-row>
         <v-spacer />
         <v-col cols="6" class="text-center">
-          <v-form @submit.prevent="submit">
+          <v-form v-model="isFormValid" @submit.prevent="submit">
             <v-text-field
               :rules="validate"
               v-model="searchTerm"

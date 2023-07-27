@@ -71,3 +71,6 @@ See [Configuration Reference](https://vitejs.dev/config/).
 
 <!-- https://stackoverflow.com/questions/59255192/breakpoints-not-working-correctly-for-xs-in-vuetify -->
 <!-- why is my breakpoint not working lmao -->
+
+<!-- https://stackoverflow.com/questions/76212493/vuetify-3-v-form-submitting-even-if-not-valid -->
+<!-- incorporating validation on form submission -->

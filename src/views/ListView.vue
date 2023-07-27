@@ -26,16 +26,14 @@ const movieObjects = [
 ]
 
 class MovieOption {
-  constructor(id, title, releaseDate, generatedTitle) {
+  constructor(id, generatedTitle) {
     this.id = id,
-    this.title = title,
-    this.releaseDate = releaseDate || "",
     this.generatedTitle = generatedTitle
   }
 }
 
 function generateTitle(title, date) {
-  if (date.trim().length === 0) {
+  if (!date || date.trim().length === 0) {
     return title;
   }
     return `${title} (${date.split('-')[0]})`
@@ -44,9 +42,7 @@ function generateTitle(title, date) {
 onMounted(() => {
   movieObjects.forEach(movie => {
     movies.value.push(new MovieOption(
-      movie.id, 
-      movie.title, 
-      movie.release_date, 
+      movie.id,
       generateTitle(movie.title, movie.release_date)
     ))
   });
