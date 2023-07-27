@@ -1,6 +1,6 @@
 <script setup>
   import AppBar from '@/components/AppBar.vue'
-  import AppView from '@/layouts/MainView.vue'
+  import AppView from '@/layouts/MainViewLayout.vue'
   import AppFooter from '@/components/AppFooter.vue'
 </script>
 

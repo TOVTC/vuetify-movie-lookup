@@ -10,7 +10,7 @@
   <v-app-bar flat class="bg-blue">
     <v-app-bar-title @click="placeholder('homepage')">
       <v-icon class="mx-2">
-        <v-img src="../../../public/favicon.png"/>
+        <v-img src="/favicon.png"/>
       </v-icon>
       <p class="d-inline mx-2">Movie Lookup</p>
     </v-app-bar-title>
