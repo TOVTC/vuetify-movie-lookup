@@ -26,7 +26,6 @@ onMounted(() => {
       generateTitle(movie.title, movie.release_date)
     ))
   });
-  console.log(movies.value);
 });
 </script>
 
@@ -36,7 +35,7 @@ onMounted(() => {
       <v-row class="mt-5">
         <v-spacer />
         <v-col cols="12" sm="10" md="8">
-          <h2 class="align-start text-h4">Search Results</h2>
+          <h2 class="align-start text-h4">Top Rated</h2>
         </v-col>
         <v-spacer />
       </v-row>

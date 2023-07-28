@@ -1,23 +1,21 @@
 <script setup>
-  // import { ref, VueElement } from 'vue';
-
-  function placeholder(term) {
-    console.log(term);
-  }
+  //
 </script>
 
 <template>
   <v-app-bar flat class="bg-blue">
-    <v-app-bar-title @click="placeholder('homepage')">
-      <v-icon class="mx-2">
+    <v-app-bar-title>
+      <router-link :to="{name: 'Home'}">
+        <v-icon class="mx-2">
         <v-img src="/favicon.png"/>
       </v-icon>
-      <h1 class="d-inline mx-2 text-h5">Movie Lookup</h1>
+      <h1 class="d-inline-block mx-2 text-h5 text-decoration-none text-white">Movie Lookup</h1>
+      </router-link>
     </v-app-bar-title>
     <!-- <v-spacer /> -->
-    <v-btn text @click="placeholder('trending')">Trending</v-btn>
-    <v-btn text @click="placeholder('popular')">Popular</v-btn>
-    <v-btn text @click="placeholder('top rated')">Top Rated</v-btn>
-    <v-btn text @click="placeholder('now playing')">Now Playing</v-btn>
+    <v-btn text :to="{ name: 'Trending'}" exact>Trending</v-btn>
+    <v-btn text :to="{ name: 'Popular'}" exact>Popular</v-btn>
+    <v-btn text :to="{ name: 'Rated'}" exact>Top Rated</v-btn>
+    <v-btn text :to="{ name: 'Playing'}" exact>Now Playing</v-btn>
   </v-app-bar>
 </template>

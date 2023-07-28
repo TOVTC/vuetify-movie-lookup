@@ -26,7 +26,6 @@ onMounted(() => {
       generateTitle(movie.title, movie.release_date)
     ))
   });
-  console.log(movies.value);
 });
 </script>
 
