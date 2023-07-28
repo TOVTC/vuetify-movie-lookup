@@ -139,8 +139,8 @@ onMounted(() => {
       <!-- row 1 - title -->
       <v-row v-if="movie" justify="center" class="align-end my-5">
         <v-spacer />
-        <v-col cols="12" sm="10" lg="9">
-          <h2 class="text-h4 font-weight-bold text-center text-sm-left">{{ movie.title }}</h2>        
+        <v-col cols="12" sm="11">
+          <h2 class="text-h4 font-weight-bold text-center text-md-left">{{ movie.title }}</h2>        
         </v-col>
         <v-spacer />
       </v-row>
@@ -150,8 +150,8 @@ onMounted(() => {
         <v-col cols="11" md="5" lg="3">
           <v-img :src="movie.posterPath.length !== 0 ? movie.posterPath : '../favicon.png'"/>
         </v-col>
-        <v-col cols="12" md="1"/>
-        <v-col cols="11" md="6" lg="4" class="text-center text-md-left">
+        <v-spacer />
+        <v-col cols="11" md="6" lg="5" class="text-center text-md-left">
           <p v-if="movie.tagline.length > 0" class="my-3 font-italic text-subtitle-1">"{{ movie.tagline }}"</p>
           <p v-if="movie.releaseDate.length > 0" class="text-subtitle-2">Release Date - {{ movie.releaseDate }}</p>
           <p v-if="movie.runtime.length > 0" class="text-subtitle-2">Runtime - {{ movie.runtime }}</p>
@@ -183,7 +183,7 @@ onMounted(() => {
           >
           </v-list>
         </v-col>
-        <v-col cols="12" md="1" />
+        <v-spacer />
         <v-col cols="11" md="5" lg="4">
           <h3 class="text-h5 font-weight-bold">Similar Films</h3>
           <v-list
