@@ -152,14 +152,16 @@ onMounted(() => {
         </v-col>
         <v-spacer />
         <v-col cols="11" md="6" lg="5" class="text-center text-md-left">
-          <p v-if="movie.tagline.length > 0" class="my-3 font-italic text-subtitle-1">"{{ movie.tagline }}"</p>
-          <p v-if="movie.releaseDate.length > 0" class="text-subtitle-2">Release Date - {{ movie.releaseDate }}</p>
-          <p v-if="movie.runtime.length > 0" class="text-subtitle-2">Runtime - {{ movie.runtime }}</p>
-          <p v-if="movie.genres.length > 0" class="text-subtitle-2">Genres - {{ movie.genres.join(', ') }}</p>
-          <p v-if="movie.language.length > 0" class="text-subtitle-2">Languages ({{ movie.language }}){{ movie.languages.length > 0 ? ` - ${movie.languages.join(', ')}` : "" }}</p>
-          <p v-if="movie.productionCompanies.length > 0" class="text-subtitle-2">Production Company - {{ movie.productionCompanies.join(', ') }}</p>
-          <a v-if="movie.homepage.length > 0" class="text-subtitle-2" :href="movie.homepage" target="_blank">{{ movie.homepage }}</a>
-          <p v-if="movie.overview.length > 0" class="mt-5 text-body-1">{{ movie.overview }}</p>
+          <v-sheet>
+            <p v-if="movie.tagline.length > 0" class="my-3 font-italic text-subtitle-1">"{{ movie.tagline }}"</p>
+            <p v-if="movie.releaseDate.length > 0" class="text-subtitle-2">Release Date - {{ movie.releaseDate }}</p>
+            <p v-if="movie.runtime.length > 0" class="text-subtitle-2">Runtime - {{ movie.runtime }}</p>
+            <p v-if="movie.genres.length > 0" class="text-subtitle-2">Genres - {{ movie.genres.join(', ') }}</p>
+            <p v-if="movie.language.length > 0" class="text-subtitle-2">Languages ({{ movie.language }}){{ movie.languages.length > 0 ? ` - ${movie.languages.join(', ')}` : "" }}</p>
+            <p v-if="movie.productionCompanies.length > 0" class="text-subtitle-2">Production Company - {{ movie.productionCompanies.join(', ') }}</p>
+            <a v-if="movie.homepage.length > 0" class="text-subtitle-2" :href="movie.homepage" target="_blank">{{ movie.homepage }}</a>
+            <p v-if="movie.overview.length > 0" class="mt-5 text-body-1">{{ movie.overview }}</p>
+          </v-sheet>
         </v-col>
         <v-spacer />
       </v-row>

@@ -1,22 +1,24 @@
 <script setup>
-    import { ref } from 'vue';
-    const isFormValid = ref(false);
-    const searchTerm = ref('');
-    const validate = [
-      () => {
-          if (searchTerm.value.trim().length === 0) {
-          return 'You must enter a valid search term';
-        }
-        return true;
-      }
-    ]
+import router from '@/router';
+import { ref } from 'vue';
 
-    function submit() {
-      if (!isFormValid.value) {
-        return;
-      }
-      console.log(searchTerm.value);
+const isFormValid = ref(false);
+const searchTerm = ref('');
+const validate = [
+  () => {
+      if (searchTerm.value.trim().length === 0) {
+      return 'You must enter a valid search term';
     }
+    return true;
+  }
+]
+
+function submit() {
+  if (!isFormValid.value) {
+    return;
+  }
+  router.push({ name: 'Results', params: { term: searchTerm.value} });
+}
 </script>
 
 <template>
