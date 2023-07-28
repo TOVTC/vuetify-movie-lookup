@@ -12,7 +12,7 @@
       <v-icon class="mx-2">
         <v-img src="/favicon.png"/>
       </v-icon>
-      <p class="d-inline mx-2">Movie Lookup</p>
+      <h1 class="d-inline mx-2 text-h5">Movie Lookup</h1>
     </v-app-bar-title>
     <!-- <v-spacer /> -->
     <v-btn text @click="placeholder('trending')">Trending</v-btn>

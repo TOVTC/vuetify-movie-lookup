@@ -34,6 +34,11 @@ onMounted(() => {
   <v-container class="fill-height" fluid>
     <v-responsive class="align-center text-center fill-height">
       <v-row>
+        <v-col>
+          <h2 class="align-start text-h4">Search Results</h2>
+        </v-col>
+      </v-row>
+      <v-row>
         <v-spacer />
         <v-col cols="6" class="text-center">
           <v-list
