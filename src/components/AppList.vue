@@ -42,7 +42,7 @@ onMounted(() => {
 <v-list v-if="movies">
   <v-list-item v-for="(item, i) in movies" :key="i">
     <template v-slot:prepend>
-      <v-img :src="item.posterPath" :width="20"></v-img>
+      <v-img :src="item.posterPath" :width="20" />
     </template>
     <router-link class="text-decoration-none text-black" :to="{ name: 'Details', params: { id: item.id } }">
       <v-list-item-title :v-text="item.generatedTitle" class="mx-5">{{ item.generatedTitle }}</v-list-item-title>

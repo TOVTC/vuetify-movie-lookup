@@ -5,11 +5,33 @@
 </script>
 
 <template>
-  <v-app>
-    <app-bar />
-
-    <app-view />
-
-    <app-footer />
-  </v-app>
+  <div id="page-container">
+    <v-app>
+      <app-bar />
+      <div id="content-wrap">
+        <app-view />
+      </div>
+      <div id="footer">
+        <app-footer />
+      </div>
+    </v-app>
+  </div>
 </template>
+
+<style>
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 4.5rem;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 4.5rem;
+}
+</style>
