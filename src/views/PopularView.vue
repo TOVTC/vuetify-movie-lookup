@@ -32,15 +32,17 @@ onMounted(() => {
 
 <template>
   <v-container class="fill-height" fluid>
-    <v-responsive class="align-center text-center fill-height">
-      <v-row>
-        <v-col>
+    <v-responsive class="align-center fill-height">
+      <v-row class="mt-5">
+        <v-spacer />
+        <v-col cols="12" sm="10" md="8">
           <h2 class="align-start text-h4">Search Results</h2>
         </v-col>
-      </v-row>
-      <v-row>
         <v-spacer />
-        <v-col cols="6" class="text-center">
+      </v-row>
+      <v-row class="mb-5">
+        <v-spacer />
+        <v-col cols="12" sm="10" md="8" class="text-left">
           <v-list
             :items="movies"
             item-title="generatedTitle"
