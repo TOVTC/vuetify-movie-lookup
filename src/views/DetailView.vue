@@ -19,23 +19,30 @@ class Movie {
   constructor(id, title, originalTitle, posterPath, language, releaseDate, runtime, tagline, homepage, overview, genres, languages, productionCompanies) {
       this.id = id,
       this.title = title,
-      this.originalTitle = originalTitle || "",
-      this.posterPath = `https://image.tmdb.org/t/p/original${posterPath}` || "",
-      this.language = language || "",
-      this.releaseDate = releaseDate || "",
-      this.runtime = runtime,
-      this.tagline = tagline || "",
-      this.homepage = homepage || "",
-      this.overview = overview || "",
+      this.originalTitle = originalTitle && originalTitle !== 'null' ? originalTitle : '',
+      this.posterPath = posterPath,
+      this.language = language && language !== 'null' ? language : '',
+      this.releaseDate = releaseDate && releaseDate !== 'null' ? releaseDate : '',
+      this.runtime = runtime && runtime !== 'null' && runtime !== 0 ? runtime : 0,
+      this.tagline = tagline && tagline !== 'null' ? tagline : '',
+      this.homepage = homepage && homepage !== 'null' ? homepage : '',
+      this.overview = overview && overview !== 'null' ? overview : '',
       this.genres = genres,
       this.languages = languages,
       this.productionCompanies = productionCompanies
   }
 }
 
+function generatePosterPath(path) {
+  if (!path || path === 'null' || path.trim().length === 0) {
+    return '../favicon.png';
+  } 
+  return `https://image.tmdb.org/t/p/original${path}`;
+}
+
 function runtime(runtime) {
-  if (!runtime || runtime === 0) {
-    return "";
+  if (runtime === 0) {
+    return '';
   }
 
   let hours = Math.floor(runtime/60);
@@ -59,7 +66,7 @@ onMounted(async () => {
   let recommended = await MediaService.getRecommended(props.id)
   let similar = await MediaService.getSimilar(props.id)
   if (!details || !recommended || !similar) {
-      alert("something went wrong")
+      alert('something went wrong')
       return
   } else {
       film.value = details.data
@@ -71,7 +78,7 @@ onMounted(async () => {
     film.value.id,
     film.value.title,
     film.value.original_title,
-    film.value.poster_path,
+    generatePosterPath(film.value.poster_path),
     film.value.original_language,
     film.value.release_date,
     runtime(film.value.runtime),
