@@ -6,6 +6,13 @@ const movie = ref(null);
 const movies = ref([]);
 const movieObjects = ref(data);
 
+const props = defineProps({
+  id: {
+    type: String,
+    required: true,
+  }
+});
+
 const movieObject = {
     "genres": [
         {
@@ -138,6 +145,7 @@ onMounted(() => {
       generatePosterPath(movie.poster_path),
     ));
   });
+  console.log(props.id)
 });
 
 </script>
@@ -188,15 +196,13 @@ onMounted(() => {
         <v-col cols="11" md="5" lg="4">
           <h3 class="text-h5 font-weight-bold">Recommended Films</h3>
           <v-list>
-            <v-list-item
-              v-for="(item, i) in movies"
-              :key="i"
-              :value="item.id"
-            >
-            <template v-slot:prepend>
-              <v-img :src="item.posterPath" :width="20"></v-img>
-            </template>
-            <v-list-item-title :v-text="item.generatedTitle" class="mx-5">{{ item.generatedTitle }}</v-list-item-title>
+            <v-list-item v-for="(item, i) in movies" :key="i">
+              <template v-slot:prepend>
+                <v-img :src="item.posterPath" :width="20"></v-img>
+              </template>
+              <router-link class="text-decoration-none text-black" :to="{ name: 'Details', params: { id: item.id } }">
+                <v-list-item-title :v-text="item.generatedTitle" class="mx-5">{{ item.generatedTitle }}</v-list-item-title>
+              </router-link>
             </v-list-item>
           </v-list>
         </v-col>
@@ -204,15 +210,13 @@ onMounted(() => {
         <v-col cols="11" md="5" lg="4">
           <h3 class="text-h5 font-weight-bold">Similar Films</h3>
           <v-list>
-            <v-list-item
-              v-for="(item, i) in movies"
-              :key="i"
-              :value="item.id"
-            >
-            <template v-slot:prepend>
-              <v-img :src="item.posterPath" :width="20"></v-img>
-            </template>
-            <v-list-item-title :v-text="item.generatedTitle" class="mx-5">{{ item.generatedTitle }}</v-list-item-title>
+            <v-list-item v-for="(item, i) in movies" :key="i">
+              <template v-slot:prepend>
+                <v-img :src="item.posterPath" :width="20"></v-img>
+              </template>
+              <router-link class="text-decoration-none text-black" :to="{ name: 'Details', params: { id: item.id } }">
+                <v-list-item-title :v-text="item.generatedTitle" class="mx-5">{{ item.generatedTitle }}</v-list-item-title>
+              </router-link>
             </v-list-item>
           </v-list>
         </v-col>
