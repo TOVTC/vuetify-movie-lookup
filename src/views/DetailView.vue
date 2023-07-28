@@ -127,7 +127,7 @@ onMounted(() => {
     movies.value.push(new MovieOption(
       movie.id,
       generateTitle(movie.title, movie.release_date)
-    ))
+    ));
   });
 });
 
@@ -136,35 +136,46 @@ onMounted(() => {
 <template>
   <v-container class="fill-height" fluid>
     <v-responsive class="align-center fill-height">
-      <v-row v-if="movie" class="align-end">
+      <!-- row 1 - title -->
+      <v-row v-if="movie" justify="center" class="align-end my-5">
         <v-spacer />
-        <v-col cols="10">
-          <h2 class="text-h4 font-weight-bold">{{ movie.title }}</h2>        
+        <v-col cols="12" sm="10" lg="9">
+          <h2 class="text-h4 font-weight-bold text-center text-sm-left">{{ movie.title }}</h2>        
         </v-col>
         <v-spacer />
       </v-row>
+      <!-- row 2 - movie poster & details -->
       <v-row v-if="movie" class="my-5 align-end">
         <v-spacer />
-        <v-col cols="4">
+        <v-col cols="11" md="5" lg="3">
           <v-img :src="movie.posterPath.length !== 0 ? movie.posterPath : '../favicon.png'"/>
         </v-col>
-        <v-spacer />
-        <v-col cols="5">
-          <p v-if="movie.tagline.length > 0" class="my-3 font-italic">"{{ movie.tagline }}"</p>
-          <p v-if="movie.releaseDate.length > 0">Release Date - {{ movie.releaseDate }}</p>
-          <p v-if="movie.runtime.length > 0">Runtime - {{ movie.runtime }}</p>
-          <p v-if="movie.genres.length > 0">Genres - {{ movie.genres.join(', ') }}</p>
-          <p v-if="movie.language.length > 0">Languages ({{ movie.language }}){{ movie.languages.length > 0 ? ` - ${movie.languages.join(', ')}` : "" }}</p>
-          <p v-if="movie.productionCompanies.length > 0">Production Company - {{ movie.productionCompanies.join(', ') }}</p>
-          <p v-if="movie.homepage.length > 0">{{ movie.homepage }}</p>
-          <p v-if="movie.overview.length > 0">{{ movie.overview }}</p>
+        <v-col cols="12" md="1"/>
+        <v-col cols="11" md="6" lg="4" class="text-center text-md-left">
+          <p v-if="movie.tagline.length > 0" class="my-3 font-italic text-subtitle-1">"{{ movie.tagline }}"</p>
+          <p v-if="movie.releaseDate.length > 0" class="text-subtitle-2">Release Date - {{ movie.releaseDate }}</p>
+          <p v-if="movie.runtime.length > 0" class="text-subtitle-2">Runtime - {{ movie.runtime }}</p>
+          <p v-if="movie.genres.length > 0" class="text-subtitle-2">Genres - {{ movie.genres.join(', ') }}</p>
+          <p v-if="movie.language.length > 0" class="text-subtitle-2">Languages ({{ movie.language }}){{ movie.languages.length > 0 ? ` - ${movie.languages.join(', ')}` : "" }}</p>
+          <p v-if="movie.productionCompanies.length > 0" class="text-subtitle-2">Production Company - {{ movie.productionCompanies.join(', ') }}</p>
+          <a v-if="movie.homepage.length > 0" class="text-subtitle-2" :href="movie.homepage" target="_blank">{{ movie.homepage }}</a>
+          <p v-if="movie.overview.length > 0" class="mt-5 text-body-1">{{ movie.overview }}</p>
         </v-col>
         <v-spacer />
       </v-row>
+      <!-- row 3 - spacer -->
+      <v-row>
+        <v-spacer />
+          <v-col cols="10">
+            <v-divider/>
+          </v-col>
+        <v-spacer />
+      </v-row>
+      <!-- row 4 - recommended & similar films -->
       <v-row v-if="movie" class="my-5">
         <v-spacer />
-        <v-col cols="4">
-          <h3>Recommended Films</h3>
+        <v-col cols="11" md="5" lg="4">
+          <h3 class="text-h5 font-weight-bold">Recommended Films</h3>
           <v-list
             :items="movies"
             item-title="generatedTitle"
@@ -172,9 +183,9 @@ onMounted(() => {
           >
           </v-list>
         </v-col>
-        <v-spacer />
-        <v-col cols="5">
-          <h3>Similar Films</h3>
+        <v-col cols="12" md="1" />
+        <v-col cols="11" md="5" lg="4">
+          <h3 class="text-h5 font-weight-bold">Similar Films</h3>
           <v-list
             :items="movies"
             item-title="generatedTitle"
