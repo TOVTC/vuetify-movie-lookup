@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { data } from '../assets/data.js';
+import { data } from '@/assets/data.js';
+import AppList from '@/components/AppList.vue';
 
 const movie = ref(null);
-const movies = ref([]);
 const movieObjects = ref(data);
 
 const props = defineProps({
@@ -78,28 +78,6 @@ class Movie {
   }
 }
 
-class MovieOption {
-  constructor(id, generatedTitle, posterPath) {
-    this.id = id,
-    this.generatedTitle = generatedTitle,
-    this.posterPath = posterPath
-  }
-}
-
-function generateTitle(title, date) {
-  if (!date || date.trim().length === 0) {
-    return title;
-  }
-    return `${title} (${date.split('-')[0]})`
-}
-
-function generatePosterPath(path) {
-  if (!path || path.trim().length === 0) {
-    return '../favicon.png';
-  } 
-  return `https://image.tmdb.org/t/p/original${path}`;
-}
-
 function runtime(runtime) {
   if (!runtime || runtime === 0) {
     return "";
@@ -137,14 +115,6 @@ onMounted(() => {
     parseObjects('english_name', movieObject.spoken_languages),
     parseObjects('name', movieObject.production_companies)
   )
-
-  movieObjects.value.forEach(movie => {
-    movies.value.push(new MovieOption(
-      movie.id,
-      generateTitle(movie.title, movie.release_date),
-      generatePosterPath(movie.poster_path),
-    ));
-  });
   console.log(props.id)
 });
 
@@ -191,34 +161,16 @@ onMounted(() => {
         <v-spacer />
       </v-row>
       <!-- row 4 - recommended & similar films -->
-      <v-row v-if="movie" class="my-5">
+      <v-row class="my-5">
         <v-spacer />
         <v-col cols="11" md="5" lg="4">
           <h3 class="text-h5 font-weight-bold">Recommended Films</h3>
-          <v-list>
-            <v-list-item v-for="(item, i) in movies" :key="i">
-              <template v-slot:prepend>
-                <v-img :src="item.posterPath" :width="20"></v-img>
-              </template>
-              <router-link class="text-decoration-none text-black" :to="{ name: 'Details', params: { id: item.id } }">
-                <v-list-item-title :v-text="item.generatedTitle" class="mx-5">{{ item.generatedTitle }}</v-list-item-title>
-              </router-link>
-            </v-list-item>
-          </v-list>
+          <AppList :results="movieObjects" />
         </v-col>
         <v-spacer />
         <v-col cols="11" md="5" lg="4">
           <h3 class="text-h5 font-weight-bold">Similar Films</h3>
-          <v-list>
-            <v-list-item v-for="(item, i) in movies" :key="i">
-              <template v-slot:prepend>
-                <v-img :src="item.posterPath" :width="20"></v-img>
-              </template>
-              <router-link class="text-decoration-none text-black" :to="{ name: 'Details', params: { id: item.id } }">
-                <v-list-item-title :v-text="item.generatedTitle" class="mx-5">{{ item.generatedTitle }}</v-list-item-title>
-              </router-link>
-            </v-list-item>
-          </v-list>
+          <AppList :results="movieObjects" />
         </v-col>
         <v-spacer />
       </v-row>
