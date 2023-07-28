@@ -43,6 +43,7 @@ onMounted(() => {
       <v-row class="mb-5">
         <v-spacer />
         <v-col cols="12" sm="10" md="8" class="text-left">
+          <!-- maybe make these cards with images instead -->
           <v-list
             :items="movies"
             item-title="generatedTitle"

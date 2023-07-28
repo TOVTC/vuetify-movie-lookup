@@ -1,7 +1,10 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import { data } from '../assets/data.js';
 
 const movie = ref(null);
+const movies = ref([]);
+const movieObjects = ref(data);
 
 const movieObject = {
     "genres": [
@@ -55,10 +58,10 @@ class Movie {
       this.id = id,
       this.title = title,
       this.originalTitle = originalTitle || "",
-      this.posterPath = posterPath || "",
+      this.posterPath = `https://image.tmdb.org/t/p/original${posterPath}` || "",
       this.language = language || "",
       this.releaseDate = releaseDate || "",
-      this.runtime = runtime || "",
+      this.runtime = runtime,
       this.tagline = tagline || "",
       this.homepage = homepage || "",
       this.overview = overview || "",
@@ -68,25 +71,50 @@ class Movie {
   }
 }
 
-function parseObjects(propName, data) {
-      let targetValues = [];
-
-      data.forEach(item => {
-          targetValues.push(item[propName]);
-      });
-
-      return targetValues;
+class MovieOption {
+  constructor(id, generatedTitle) {
+    this.id = id,
+    this.generatedTitle = generatedTitle
   }
+}
+
+function generateTitle(title, date) {
+  if (!date || date.trim().length === 0) {
+    return title;
+  }
+    return `${title} (${date.split('-')[0]})`
+}
+
+function runtime(runtime) {
+  if (!runtime || runtime === 0) {
+    return "";
+  }
+
+  let hours = Math.floor(runtime/60);
+  let minutes = runtime % 60;
+
+  return `${hours}h ${minutes}min`;
+}
+
+function parseObjects(propName, data) {
+  let targetValues = [];
+
+  data.forEach(item => {
+      targetValues.push(item[propName]);
+  });
+
+  return targetValues;
+}
 
 onMounted(() => {
   movie.value = new Movie(
     movieObject.id,
     movieObject.title,
     movieObject.original_title,
-    movieObject.posterpath,
+    movieObject.poster_path,
     movieObject.original_language,
     movieObject.release_date,
-    movieObject.runtime,
+    runtime(movieObject.runtime),
     movieObject.tagline,
     movieObject.homepage,
     movieObject.overview,
@@ -94,23 +122,65 @@ onMounted(() => {
     parseObjects('english_name', movieObject.spoken_languages),
     parseObjects('name', movieObject.production_companies)
   )
-  console.log(movie.value);
+
+  movieObjects.value.forEach(movie => {
+    movies.value.push(new MovieOption(
+      movie.id,
+      generateTitle(movie.title, movie.release_date)
+    ))
+  });
 });
 
 </script>
 
 <template>
   <v-container class="fill-height" fluid>
-    <v-responsive class="align-center text-center fill-height">
-      <v-row>
+    <v-responsive class="align-center fill-height">
+      <v-row v-if="movie" class="align-end">
         <v-spacer />
-        <v-col cols="6" class="text-center">
-          <!-- <v-list
-            :items="items"
-            item-title=""
+        <v-col cols="10">
+          <h2 class="text-h4 font-weight-bold">{{ movie.title }}</h2>        
+        </v-col>
+        <v-spacer />
+      </v-row>
+      <v-row v-if="movie" class="my-5 align-end">
+        <v-spacer />
+        <v-col cols="4">
+          <v-img :src="movie.posterPath.length !== 0 ? movie.posterPath : '../favicon.png'"/>
+        </v-col>
+        <v-spacer />
+        <v-col cols="5">
+          <p v-if="movie.tagline.length > 0" class="my-3 font-italic">"{{ movie.tagline }}"</p>
+          <p v-if="movie.releaseDate.length > 0">Release Date - {{ movie.releaseDate }}</p>
+          <p v-if="movie.runtime.length > 0">Runtime - {{ movie.runtime }}</p>
+          <p v-if="movie.genres.length > 0">Genres - {{ movie.genres.join(', ') }}</p>
+          <p v-if="movie.language.length > 0">Languages ({{ movie.language }}){{ movie.languages.length > 0 ? ` - ${movie.languages.join(', ')}` : "" }}</p>
+          <p v-if="movie.productionCompanies.length > 0">Production Company - {{ movie.productionCompanies.join(', ') }}</p>
+          <p v-if="movie.homepage.length > 0">{{ movie.homepage }}</p>
+          <p v-if="movie.overview.length > 0">{{ movie.overview }}</p>
+        </v-col>
+        <v-spacer />
+      </v-row>
+      <v-row v-if="movie" class="my-5">
+        <v-spacer />
+        <v-col cols="4">
+          <h3>Recommended Films</h3>
+          <v-list
+            :items="movies"
+            item-title="generatedTitle"
             item-value="id"
           >
-          </v-list> -->
+          </v-list>
+        </v-col>
+        <v-spacer />
+        <v-col cols="5">
+          <h3>Similar Films</h3>
+          <v-list
+            :items="movies"
+            item-title="generatedTitle"
+            item-value="id"
+          >
+          </v-list>
         </v-col>
         <v-spacer />
       </v-row>
