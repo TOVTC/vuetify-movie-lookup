@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 
-const movies = ref([]);
 const props = defineProps(['results']);
+const movies = ref([]);
 
 class MovieOption {
   constructor(id, generatedTitle, posterPath) {
@@ -34,7 +34,6 @@ onMounted(() => {
       generatePosterPath(movie.poster_path),
     ));
   });
-  console.log(props.results)
 });
 </script>
 

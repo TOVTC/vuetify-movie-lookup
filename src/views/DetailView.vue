@@ -1,10 +1,12 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { data } from '@/assets/data.js';
 import AppList from '@/components/AppList.vue';
+import MediaService from '@/services/MediaService.js';
 
+const film = ref(null);
 const movie = ref(null);
-const movieObjects = ref(data);
+const recFilms = ref(null);
+const simFilms = ref(null);
 
 const props = defineProps({
   id: {
@@ -12,53 +14,6 @@ const props = defineProps({
     required: true,
   }
 });
-
-const movieObject = {
-    "genres": [
-        {
-        "id": 12,
-        "name": "Adventure"
-        },
-        {
-        "id": 28,
-        "name": "Action"
-        },
-        {
-        "id": 878,
-        "name": "Science Fiction"
-        }
-    ],
-    "homepage": "https://www.marvel.com/movies/avengers-infinity-war",
-    "id": 299536,
-    "original_language": "en",
-    "original_title": "Avengers: Infinity War",
-    "overview": "As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain.",
-    "poster_path": "/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
-    "production_companies": [
-        {
-        "id": 420,
-        "logo_path": "/hUzeosd33nzE5MCNsZxCGEKTXaQ.png",
-        "name": "Marvel Studios",
-        "origin_country": "US"
-        }
-    ],
-    "release_date": "2018-04-25",
-    "runtime": 149,
-    "spoken_languages": [
-        {
-        "english_name": "English",
-        "iso_639_1": "en",
-        "name": "English"
-        },
-        {
-        "english_name": "Xhosa",
-        "iso_639_1": "xh",
-        "name": ""
-        }
-    ],
-    "tagline": "An entire universe. Once and for all.",
-    "title": "Avengers: Infinity War"
-};
 
 class Movie {
   constructor(id, title, originalTitle, posterPath, language, releaseDate, runtime, tagline, homepage, overview, genres, languages, productionCompanies) {
@@ -99,23 +54,34 @@ function parseObjects(propName, data) {
   return targetValues;
 }
 
-onMounted(() => {
+onMounted(async () => {
+  let details = await MediaService.getDetails(props.id)
+  let recommended = await MediaService.getRecommended(props.id)
+  let similar = await MediaService.getSimilar(props.id)
+  if (!details || !recommended || !similar) {
+      alert("something went wrong")
+      return
+  } else {
+      film.value = details.data
+      recFilms.value = recommended.data.results
+      simFilms.value = similar.data.results
+  }
+
   movie.value = new Movie(
-    movieObject.id,
-    movieObject.title,
-    movieObject.original_title,
-    movieObject.poster_path,
-    movieObject.original_language,
-    movieObject.release_date,
-    runtime(movieObject.runtime),
-    movieObject.tagline,
-    movieObject.homepage,
-    movieObject.overview,
-    parseObjects('name', movieObject.genres),
-    parseObjects('english_name', movieObject.spoken_languages),
-    parseObjects('name', movieObject.production_companies)
-  )
-  console.log(props.id)
+    film.value.id,
+    film.value.title,
+    film.value.original_title,
+    film.value.poster_path,
+    film.value.original_language,
+    film.value.release_date,
+    runtime(film.value.runtime),
+    film.value.tagline,
+    film.value.homepage,
+    film.value.overview,
+    parseObjects('name', film.value.genres),
+    parseObjects('english_name', film.value.spoken_languages),
+    parseObjects('name', film.value.production_companies)
+  );
 });
 
 </script>
@@ -124,7 +90,7 @@ onMounted(() => {
   <v-container class="fill-height" fluid>
     <v-responsive class="align-center fill-height">
       <!-- row 1 - title -->
-      <v-row v-if="movie" justify="center" class="align-end my-5">
+      <v-row v-if="film" justify="center" class="align-end my-5">
         <v-spacer />
         <v-col cols="12" sm="11">
           <h2 class="text-h4 font-weight-bold text-center text-md-left">{{ movie.title }}</h2>        
@@ -132,7 +98,7 @@ onMounted(() => {
         <v-spacer />
       </v-row>
       <!-- row 2 - movie poster & details -->
-      <v-row v-if="movie" class="my-5 align-end">
+      <v-row v-if="film" class="my-5 align-end">
         <v-spacer />
         <v-col cols="11" md="5" lg="3">
           <v-img :src="movie.posterPath.length !== 0 ? movie.posterPath : '../favicon.png'"/>
@@ -161,16 +127,16 @@ onMounted(() => {
         <v-spacer />
       </v-row>
       <!-- row 4 - recommended & similar films -->
-      <v-row class="my-5">
+      <v-row v-if="simFilms && recFilms" class="my-5">
         <v-spacer />
         <v-col cols="11" md="5" lg="4">
           <h3 class="text-h5 font-weight-bold">Recommended Films</h3>
-          <AppList :results="movieObjects" />
+          <AppList :results="recFilms" />
         </v-col>
         <v-spacer />
         <v-col cols="11" md="5" lg="4">
           <h3 class="text-h5 font-weight-bold">Similar Films</h3>
-          <AppList :results="movieObjects" />
+          <AppList :results="simFilms" />
         </v-col>
         <v-spacer />
       </v-row>

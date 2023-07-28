@@ -1,12 +1,18 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { data } from '@/assets/data.js';
 import AppList from '@/components/AppList.vue';
+import MediaService from '@/services/MediaService.js';
 
-const movieObjects = ref(data);
+const movies = ref(null);
 
-onMounted(() => {
-
+onMounted(async () => {
+  let response = await MediaService.getTopRated()
+  if (!response) {
+    alert("something went wrong")
+    return
+  } else {
+    movies.value = response.data.results
+  }
 });
 </script>
 
@@ -20,10 +26,10 @@ onMounted(() => {
         </v-col>
         <v-spacer />
       </v-row>
-      <v-row class="mb-5">
+      <v-row v-if="movies" class="mb-5">
         <v-spacer />
         <v-col cols="12" sm="10" md="8" class="text-left">
-          <AppList :results="movieObjects" />
+          <AppList :results="movies" />
         </v-col>
         <v-spacer />
       </v-row>
