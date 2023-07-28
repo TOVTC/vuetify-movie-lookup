@@ -72,9 +72,10 @@ class Movie {
 }
 
 class MovieOption {
-  constructor(id, generatedTitle) {
+  constructor(id, generatedTitle, posterPath) {
     this.id = id,
-    this.generatedTitle = generatedTitle
+    this.generatedTitle = generatedTitle,
+    this.posterPath = posterPath
   }
 }
 
@@ -83,6 +84,13 @@ function generateTitle(title, date) {
     return title;
   }
     return `${title} (${date.split('-')[0]})`
+}
+
+function generatePosterPath(path) {
+  if (!path || path.trim().length === 0) {
+    return '../favicon.png';
+  } 
+  return `https://image.tmdb.org/t/p/original${path}`;
 }
 
 function runtime(runtime) {
@@ -126,7 +134,8 @@ onMounted(() => {
   movieObjects.value.forEach(movie => {
     movies.value.push(new MovieOption(
       movie.id,
-      generateTitle(movie.title, movie.release_date)
+      generateTitle(movie.title, movie.release_date),
+      generatePosterPath(movie.poster_path),
     ));
   });
 });
@@ -178,21 +187,33 @@ onMounted(() => {
         <v-spacer />
         <v-col cols="11" md="5" lg="4">
           <h3 class="text-h5 font-weight-bold">Recommended Films</h3>
-          <v-list
-            :items="movies"
-            item-title="generatedTitle"
-            item-value="id"
-          >
+          <v-list>
+            <v-list-item
+              v-for="(item, i) in movies"
+              :key="i"
+              :value="item.id"
+            >
+            <template v-slot:prepend>
+              <v-img :src="item.posterPath" :width="20"></v-img>
+            </template>
+            <v-list-item-title :v-text="item.generatedTitle" class="mx-5">{{ item.generatedTitle }}</v-list-item-title>
+            </v-list-item>
           </v-list>
         </v-col>
         <v-spacer />
         <v-col cols="11" md="5" lg="4">
           <h3 class="text-h5 font-weight-bold">Similar Films</h3>
-          <v-list
-            :items="movies"
-            item-title="generatedTitle"
-            item-value="id"
-          >
+          <v-list>
+            <v-list-item
+              v-for="(item, i) in movies"
+              :key="i"
+              :value="item.id"
+            >
+            <template v-slot:prepend>
+              <v-img :src="item.posterPath" :width="20"></v-img>
+            </template>
+            <v-list-item-title :v-text="item.generatedTitle" class="mx-5">{{ item.generatedTitle }}</v-list-item-title>
+            </v-list-item>
           </v-list>
         </v-col>
         <v-spacer />

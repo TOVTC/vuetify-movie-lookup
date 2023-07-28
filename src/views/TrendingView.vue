@@ -48,7 +48,7 @@ onMounted(() => {
         </v-col>
         <v-spacer />
       </v-row>
-      <v-row class="mb-5">
+      <v-row v-if="movies" class="mb-5">
         <v-spacer />
         <v-col cols="12" sm="10" md="8" class="text-left">
           <v-list>

@@ -59,7 +59,6 @@ onMounted(() => {
       <v-row v-if="movies" class="mb-5">
         <v-spacer />
         <v-col cols="12" sm="10" md="8" class="text-left">
-          <!-- maybe make these cards with images instead -->
           <v-list>
             <v-list-item
               v-for="(item, i) in movies"
