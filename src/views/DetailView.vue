@@ -42,7 +42,7 @@ class Movie {
 
 function generatePosterPath(path) {
   if (!path || path === 'null' || path.trim().length === 0) {
-    return '../favicon.png';
+    return '/favicon.png';
   } 
   return `https://image.tmdb.org/t/p/original${path}`;
 }
