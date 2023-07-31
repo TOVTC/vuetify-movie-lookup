@@ -7,6 +7,8 @@ const film = ref(null);
 const movie = ref(null);
 const recFilms = ref(null);
 const simFilms = ref(null);
+const loadingImg = ref(true);
+const isLoading = ref(true);
 
 const props = defineProps({
   id: {
@@ -62,16 +64,17 @@ function parseObjects(propName, data) {
 }
 
 onMounted(async () => {
-  let details = await MediaService.getDetails(props.id)
-  let recommended = await MediaService.getRecommended(props.id)
-  let similar = await MediaService.getSimilar(props.id)
+  let details = await MediaService.getDetails(props.id);
+  let recommended = await MediaService.getRecommended(props.id);
+  let similar = await MediaService.getSimilar(props.id);
+  isLoading.value = false;
   if (!details || !recommended || !similar) {
-      alert('something went wrong')
+      alert('something went wrong');
       return
   } else {
-      film.value = details.data
-      recFilms.value = recommended.data.results
-      simFilms.value = similar.data.results
+      film.value = details.data;
+      recFilms.value = recommended.data.results;
+      simFilms.value = similar.data.results;
   }
 
   movie.value = new Movie(
@@ -107,8 +110,9 @@ onMounted(async () => {
       <!-- row 2 - movie poster & details -->
       <v-row v-if="film" class="my-5 align-end">
         <v-col md="1" lg="2"/>
-        <v-col cols="12" md="4" lg="3" class="px-10">
-          <v-img :src="movie.posterPath.length !== 0 ? movie.posterPath : '../favicon.png'" />
+        <v-col cols="12" md="4" lg="3" class="px-10 text-center">
+          <v-img :src="movie.posterPath.length !== 0 ? movie.posterPath : '../favicon.png'" @loadstart="loadingImg = true" @load="loadingImg = false" />
+          <v-progress-circular v-if="loadingImg" indeterminate color="grey-lighten-5" size="50" />
         </v-col>
         <v-col cols="12" md="6" lg="5" class="px-10 text-center text-md-left">
           <v-sheet>
@@ -137,11 +141,13 @@ onMounted(async () => {
         <v-col md="1" lg="2"/>
         <v-col cols="12" md="5" lg="4" class="px-10">
           <h3 class="text-h5 font-weight-bold">Recommended Films</h3>
-          <AppList :results="recFilms" />
+          <v-progress-circular v-if="isLoading" indeterminate color="grey-lighten-5" size="50" />
+          <AppList v-else :results="recFilms" />
         </v-col>
         <v-col cols="12" md="5" lg="4" class="px-10">
           <h3 class="text-h5 font-weight-bold">Similar Films</h3>
-          <AppList :results="simFilms" />
+          <v-progress-circular v-if="isLoading" indeterminate color="grey-lighten-5" size="50" />
+          <AppList v-else :results="simFilms" />
         </v-col>
         <v-col md="1" lg="2"/>
       </v-row>

@@ -4,6 +4,7 @@ import AppList from '@/components/AppList.vue';
 import MediaService from '@/services/MediaService.js';
 
 const movies = ref(null);
+const isLoading = ref(true);
 
 const props = defineProps({
   term: {
@@ -13,12 +14,13 @@ const props = defineProps({
 });
 
 onMounted(async () => {
-  let response = await MediaService.getResults(props.term)
+  let response = await MediaService.getResults(props.term);
+  isLoading.value = false;
   if (!response) {
-    alert("something went wrong")
+    alert("something went wrong");
     return
   } else {
-    movies.value = response.data.results
+    movies.value = response.data.results;
   }
 });
 </script>
@@ -36,7 +38,8 @@ onMounted(async () => {
       <v-row v-if="movies" class="mb-5">
         <v-spacer />
         <v-col cols="12" sm="10" md="8" class="text-left">
-          <AppList :results="movies" />
+          <v-progress-circular v-if="isLoading" indeterminate color="grey-lighten-5" size="50" />
+          <AppList v-else :results="movies" />
         </v-col>
         <v-spacer />
       </v-row>
