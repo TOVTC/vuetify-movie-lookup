@@ -45,7 +45,7 @@ onMounted(() => {
       <v-img :src="item.posterPath" :width="30" @loadstart="isLoading = true" @load="isLoading = false" />
       <v-progress-circular v-if="isLoading" indeterminate color="grey-lighten-5" size="30" />
     </template>
-    <router-link class="text-decoration-none text-black" :to="{ name: 'Details', params: { id: item.id } }">
+    <router-link class="text-decoration-none text-black" :to="{ name: 'Details', params: { id: item.id , title: item.generatedTitle } }">
       <v-list-item-title :v-text="item.generatedTitle" class="mx-5 pa-3">{{ item.generatedTitle }}</v-list-item-title>
     </router-link>
   </v-list-item>
