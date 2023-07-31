@@ -98,20 +98,19 @@ onMounted(async () => {
     <v-responsive class="align-center fill-height">
       <!-- row 1 - title -->
       <v-row v-if="film" justify="center" class="align-end my-5">
-        <v-spacer />
-        <v-col cols="12" sm="11">
-          <h2 class="text-h4 font-weight-bold text-center text-md-left">{{ movie.title }}</h2>        
+        <v-col sm="1" />
+        <v-col cols="12" sm="10">
+          <h2 class="text-h4 font-weight-bold text-center text-md-left">{{ movie.originalTitle.length > 0 ? movie.originalTitle : movie.title }}</h2>        
         </v-col>
-        <v-spacer />
+        <v-col sm="1"/>
       </v-row>
       <!-- row 2 - movie poster & details -->
       <v-row v-if="film" class="my-5 align-end">
-        <v-spacer />
-        <v-col cols="11" md="5" lg="3">
-          <v-img :src="movie.posterPath.length !== 0 ? movie.posterPath : '../favicon.png'"/>
+        <v-col md="1" lg="2"/>
+        <v-col cols="12" md="4" lg="3" class="px-10">
+          <v-img :src="movie.posterPath.length !== 0 ? movie.posterPath : '../favicon.png'" />
         </v-col>
-        <v-spacer />
-        <v-col cols="11" md="6" lg="5" class="text-center text-md-left">
+        <v-col cols="12" md="6" lg="5" class="px-10 text-center text-md-left">
           <v-sheet>
             <p v-if="movie.tagline.length > 0" class="my-3 font-italic text-subtitle-1">"{{ movie.tagline }}"</p>
             <p v-if="movie.releaseDate.length > 0" class="text-subtitle-2">Release Date - {{ movie.releaseDate }}</p>
@@ -123,7 +122,7 @@ onMounted(async () => {
             <p v-if="movie.overview.length > 0" class="mt-5 text-body-1">{{ movie.overview }}</p>
           </v-sheet>
         </v-col>
-        <v-spacer />
+        <v-col md="1" lg="2"/>
       </v-row>
       <!-- row 3 - spacer -->
       <v-row>
@@ -135,17 +134,16 @@ onMounted(async () => {
       </v-row>
       <!-- row 4 - recommended & similar films -->
       <v-row v-if="simFilms && recFilms" class="my-5">
-        <v-spacer />
-        <v-col cols="11" md="5" lg="4">
+        <v-col md="1" lg="2"/>
+        <v-col cols="12" md="5" lg="4" class="px-10">
           <h3 class="text-h5 font-weight-bold">Recommended Films</h3>
           <AppList :results="recFilms" />
         </v-col>
-        <v-spacer />
-        <v-col cols="11" md="5" lg="4">
+        <v-col cols="12" md="5" lg="4" class="px-10">
           <h3 class="text-h5 font-weight-bold">Similar Films</h3>
           <AppList :results="simFilms" />
         </v-col>
-        <v-spacer />
+        <v-col md="1" lg="2"/>
       </v-row>
     </v-responsive>
   </v-container>
