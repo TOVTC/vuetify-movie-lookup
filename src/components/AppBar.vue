@@ -1,21 +1,53 @@
 <script setup>
-  //
+import { ref } from 'vue';
+
+const drawer = ref(false);
+
+  const navLinks = [
+    {
+      name: 'Trending',
+      label: 'Trending'
+    },
+    {
+      name: 'Popular',
+      label: 'Popular'
+    },
+    {
+      name: 'Rated',
+      label: 'Top Rated'
+    },
+    {
+      name: 'Playing',
+      label: 'Now Playing'
+    }
+  ];
 </script>
 
 <template>
   <v-app-bar flat class="bg-blue">
     <v-app-bar-title>
-      <router-link :to="{name: 'Home'}">
-        <v-icon class="mx-2">
-        <v-img src="/favicon.png"/>
+      <v-icon class="mx-2">
+        <v-img src="/favicon.png" class="hidden-xs"/>
+        <v-app-bar-nav-icon class="hidden-sm-and-up" @click="drawer = true"/>
       </v-icon>
-      <h1 class="d-inline-block mx-2 text-h5 text-decoration-none text-white">Movie Lookup</h1>
+      <router-link :to="{ name: 'Home' }">
+        <h1 class="d-inline-block mx-2 text-h5 text-decoration-none text-white">Movie Lookup</h1>
       </router-link>
     </v-app-bar-title>
-    <!-- <v-spacer /> -->
-    <v-btn text :to="{ name: 'Trending'}" exact>Trending</v-btn>
-    <v-btn text :to="{ name: 'Popular'}" exact>Popular</v-btn>
-    <v-btn text :to="{ name: 'Rated'}" exact>Top Rated</v-btn>
-    <v-btn text :to="{ name: 'Playing'}" exact>Now Playing</v-btn>
+    <div class="hidden-xs">
+      <v-btn v-for="(link, index) in navLinks" :key="index" :to="{ name: link.name }">{{ link.label }}</v-btn>
+    </div>
   </v-app-bar>
+  <v-navigation-drawer
+        v-model="drawer"
+        location="left"
+        temporary
+      >
+      <v-img src="/favicon.png" class="ma-5 pa-5"/>
+      <v-divider class="my-5"/>
+      <v-list>
+        <v-list-item :to="{ name: 'Home' }" @click="drawer = false">Search</v-list-item>
+        <v-list-item v-for="(link, index) in navLinks" :key="index" :to="{ name: link.name }" @click="drawer = false">{{ link.label }}</v-list-item>
+      </v-list>
+  </v-navigation-drawer>
 </template>

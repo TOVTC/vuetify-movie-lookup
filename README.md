@@ -74,3 +74,6 @@ See [Configuration Reference](https://vitejs.dev/config/).
 
 <!-- https://stackoverflow.com/questions/76212493/vuetify-3-v-form-submitting-even-if-not-valid -->
 <!-- incorporating validation on form submission -->
+
+<!-- https://stackoverflow.com/questions/62561821/how-to-hide-menu-items-based-on-vuetify-breakpoint -->
+<!-- visibility according to breakpoints -->
