@@ -2,7 +2,7 @@
   # Vuetify Movie Lookup
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)</br></br>
     
-  This application This application uses Vuetify and the TMDB API to host a simple movie search application. Users can search for movies by name, view extended details for a specific movie, view recommended and similar movies to search results, and view trending, popular, top-rated, and now-playing films.
+  This application uses Vuetify and the TMDB API to host a simple movie search application. Users can search for movies by name, view extended details for a specific movie, view recommended and similar movies to search results, and view trending, popular, top-rated, and now-playing films.
   
   ## Table of Contents
   
